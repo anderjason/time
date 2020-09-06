@@ -29,6 +29,9 @@ class Instant {
         if (other == null) {
             return false;
         }
+        if (!(other instanceof Instant)) {
+            return false;
+        }
         return this._epochMilliseconds === other._epochMilliseconds;
     }
     toEpochMilliseconds() {

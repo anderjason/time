@@ -36,6 +36,10 @@ export class Instant {
       return false;
     }
 
+    if (!(other instanceof Instant)) {
+      return false;
+    }
+
     return this._epochMilliseconds === other._epochMilliseconds;
   }
 

@@ -45,6 +45,9 @@ class Duration {
         if (other == null) {
             return false;
         }
+        if (!(other instanceof Duration)) {
+            return false;
+        }
         return this._milliseconds === other._milliseconds;
     }
     toMilliseconds() {
