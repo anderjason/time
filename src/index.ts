@@ -1,5 +1,6 @@
+import { Debounce } from "./Debounce";
 import { Duration } from "./Duration";
 import { Instant } from "./Instant";
-import { RateLimitedFunction } from "./RateLimitedFunction";
+import { Throttle } from "./Throttle";
 
-export { Duration, Instant, RateLimitedFunction };
+export { Debounce, Duration, Instant, Throttle };

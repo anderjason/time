@@ -92,4 +92,24 @@ export class Duration {
   toDelay(): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, this._milliseconds));
   }
+
+  withAddedMilliseconds(ms: number): Duration {
+    return new Duration(this._milliseconds + ms);
+  }
+
+  withAddedSeconds(seconds: number): Duration {
+    return Duration.givenSeconds(this.toSeconds() + seconds);
+  }
+
+  withAddedMinutes(minutes: number): Duration {
+    return Duration.givenMinutes(this.toMinutes() + minutes);
+  }
+
+  withAddedHours(hours: number): Duration {
+    return Duration.givenHours(this.toHours() + hours);
+  }
+
+  withAddedDays(days: number): Duration {
+    return Duration.givenDays(this.toDays() + days);
+  }
 }

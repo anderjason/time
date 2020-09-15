@@ -6,6 +6,10 @@
 
 ## API Reference
 
+### Debounce
+
+`TODO`
+
 ### Duration
 
 `TODO`
@@ -14,6 +18,6 @@
 
 `TODO`
 
-### RateLimitedFunction
+### Throttle
 
 `TODO`

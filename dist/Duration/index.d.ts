@@ -18,4 +18,9 @@ export declare class Duration {
     toHours(): number;
     toDays(): number;
     toDelay(): Promise<void>;
+    withAddedMilliseconds(ms: number): Duration;
+    withAddedSeconds(seconds: number): Duration;
+    withAddedMinutes(minutes: number): Duration;
+    withAddedHours(hours: number): Duration;
+    withAddedDays(days: number): Duration;
 }

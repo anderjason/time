@@ -68,6 +68,21 @@ class Duration {
     toDelay() {
         return new Promise((resolve) => setTimeout(resolve, this._milliseconds));
     }
+    withAddedMilliseconds(ms) {
+        return new Duration(this._milliseconds + ms);
+    }
+    withAddedSeconds(seconds) {
+        return Duration.givenSeconds(this.toSeconds() + seconds);
+    }
+    withAddedMinutes(minutes) {
+        return Duration.givenMinutes(this.toMinutes() + minutes);
+    }
+    withAddedHours(hours) {
+        return Duration.givenHours(this.toHours() + hours);
+    }
+    withAddedDays(days) {
+        return Duration.givenDays(this.toDays() + days);
+    }
 }
 exports.Duration = Duration;
 //# sourceMappingURL=index.js.map

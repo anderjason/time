@@ -1,6 +1,8 @@
 import { Test } from "@anderjason/tests";
 import "./Duration/index.test";
 import "./Instant/index.test";
+import "./Debounce/index.test";
+import "./Throttle/index.test";
 
 Test.runAll()
   .then(() => {
