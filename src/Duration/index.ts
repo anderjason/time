@@ -46,10 +46,6 @@ export class Duration {
   }
 
   private constructor(milliseconds: number) {
-    if (milliseconds < 0) {
-      throw new Error("Duration must not be negative");
-    }
-
     this._milliseconds = milliseconds;
   }
 

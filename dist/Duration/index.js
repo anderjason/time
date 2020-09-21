@@ -3,9 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Duration = void 0;
 class Duration {
     constructor(milliseconds) {
-        if (milliseconds < 0) {
-            throw new Error("Duration must not be negative");
-        }
         this._milliseconds = milliseconds;
     }
     static isEqual(a, b) {
