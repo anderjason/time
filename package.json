@@ -1,6 +1,6 @@
 {
   "name": "@anderjason/time",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "",
   "main": "./dist/index.js",
   "repository": {
@@ -19,7 +19,7 @@
     "dist/**/*"
   ],
   "dependencies": {
-    "@anderjason/tests": "^1.0.0",
+    "@anderjason/tests": "^1.0.1",
     "typescript": "^4.0.3"
   },
   "devDependencies": {},
