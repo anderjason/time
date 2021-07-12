@@ -31,7 +31,7 @@ export class Stopwatch {
       throw new Error(`Category '${key}' is already running`);
     }
 
-    category.startedAt = performance.now();
+    category.startedAt = new Date().getTime();
   }
 
   stop(key: string): void {
@@ -40,12 +40,9 @@ export class Stopwatch {
       throw new Error(`Category '${key}' is not running`);
     }
 
-    const durationMs = performance.now() - category.startedAt;
+    const durationMs = new Date().getTime() - category.startedAt;
     category.startedAt = undefined;
-    if (category.callCount > 0) {
-      category.avgMs =
-        category.avgMs + (durationMs - category.avgMs) / category.callCount;
-    }
+    category.totalMs += durationMs;
     category.callCount += 1;
   }
 
@@ -56,9 +53,13 @@ export class Stopwatch {
 
     let categories = Array.from(this._categoryByKey.values());
     categories.sort((a, b) => {
-      if (a.avgMs > b.avgMs) {
+      const avgMsA = a.callCount == 0 ? 0 : a.totalMs / a.callCount;
+      const avgMsB = b.callCount == 0 ? 0 : b.totalMs / b.callCount;
+
+      // descending
+      if (avgMsB > avgMsA) {
         return 1;
-      } else if (a.avgMs < b.avgMs) {
+      } else if (avgMsB < avgMsA) {
         return -1;
       }
 
@@ -67,12 +68,13 @@ export class Stopwatch {
 
     categories.forEach(category => {
       const id = category.key.padStart(30);
-      const totalMs = String(`${Math.round(category.totalMs)}ms total`).padStart(20);
+      const total = String(`${Math.round(category.totalMs)}ms total`).padStart(20);
       const count = category.callCount;
-      const avgMs = String(`${Math.round(category.avgMs)} ms avg`).padStart(20);
+      const avgMs = category.callCount == 0 ? 0 : category.totalMs / category.callCount;
+      const avg = String(`${Math.round(avgMs)}ms avg`).padStart(20);
       const times = `${count} times`.padStart(20);
 
-      console.log(`${id} ${times} ${avgMs} ${totalMs}`);
+      console.log(`${id} ${times} ${avg} ${total}`);
     })
     console.log("---")
     console.log("")
