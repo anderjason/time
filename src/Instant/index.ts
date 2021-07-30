@@ -28,6 +28,19 @@ export class Instant {
   private _epochMilliseconds: number;
 
   private constructor(epochMilliseconds: number) {
+    if (epochMilliseconds == null) {
+      throw new Error("epochMilliseconds is required");
+    }
+
+    if (isNaN(epochMilliseconds)) {
+      throw new Error("epochMilliseconds must not be NaN");
+    }
+
+    if (typeof epochMilliseconds !== "number") {
+      throw new Error("epochMilliseconds must be a number");
+    }
+
+
     this._epochMilliseconds = epochMilliseconds;
   }
 

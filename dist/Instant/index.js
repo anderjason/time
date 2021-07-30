@@ -3,6 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Instant = void 0;
 class Instant {
     constructor(epochMilliseconds) {
+        if (epochMilliseconds == null) {
+            throw new Error("epochMilliseconds is required");
+        }
+        if (isNaN(epochMilliseconds)) {
+            throw new Error("epochMilliseconds must not be NaN");
+        }
+        if (typeof epochMilliseconds !== "number") {
+            throw new Error("epochMilliseconds must be a number");
+        }
         this._epochMilliseconds = epochMilliseconds;
     }
     static isEqual(a, b) {

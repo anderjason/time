@@ -46,6 +46,18 @@ export class Duration {
   }
 
   private constructor(milliseconds: number) {
+    if (milliseconds == null) {
+      throw new Error("milliseconds is required");
+    }
+
+    if (isNaN(milliseconds)) {
+      throw new Error("milliseconds must not be NaN");
+    }
+
+    if (typeof milliseconds !== "number") {
+      throw new Error("milliseconds must be a number");
+    }
+
     this._milliseconds = milliseconds;
   }
 
@@ -90,14 +102,26 @@ export class Duration {
   }
 
   withAddedMilliseconds(ms: number): Duration {
+    if (ms == null) {
+      throw new Error("ms is required");
+    }
+
     return new Duration(this._milliseconds + ms);
   }
 
   withAddedSeconds(seconds: number): Duration {
+    if (seconds == null) {
+      throw new Error("seconds is required");
+    }
+
     return Duration.givenSeconds(this.toSeconds() + seconds);
   }
 
   withAddedMinutes(minutes: number): Duration {
+    if (minutes == null) {
+      throw new Error("minutes is required");
+    }
+
     return Duration.givenMinutes(this.toMinutes() + minutes);
   }
 

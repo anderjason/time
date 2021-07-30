@@ -3,6 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Duration = void 0;
 class Duration {
     constructor(milliseconds) {
+        if (milliseconds == null) {
+            throw new Error("milliseconds is required");
+        }
+        if (isNaN(milliseconds)) {
+            throw new Error("milliseconds must not be NaN");
+        }
+        if (typeof milliseconds !== "number") {
+            throw new Error("milliseconds must be a number");
+        }
         this._milliseconds = milliseconds;
     }
     static isEqual(a, b) {
@@ -66,12 +75,21 @@ class Duration {
         return new Promise((resolve) => setTimeout(resolve, this._milliseconds));
     }
     withAddedMilliseconds(ms) {
+        if (ms == null) {
+            throw new Error("ms is required");
+        }
         return new Duration(this._milliseconds + ms);
     }
     withAddedSeconds(seconds) {
+        if (seconds == null) {
+            throw new Error("seconds is required");
+        }
         return Duration.givenSeconds(this.toSeconds() + seconds);
     }
     withAddedMinutes(minutes) {
+        if (minutes == null) {
+            throw new Error("minutes is required");
+        }
         return Duration.givenMinutes(this.toMinutes() + minutes);
     }
     withAddedHours(hours) {
