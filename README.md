@@ -18,6 +18,10 @@
 
 `TODO`
 
+### Stopwatch
+
+`TODO`
+
 ### Throttle
 
 `TODO`
