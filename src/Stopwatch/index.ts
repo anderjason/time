@@ -1,22 +1,55 @@
+import { Duration, Instant } from "..";
+
 interface StopwatchCategory {
   key: string;
   avgMs: number;
   totalMs: number;
   callCount: number;
-
-  startedAt?: number;
 }
+
+class StopwatchInstance {
+  readonly startedAt: Instant;
+  readonly categoryKey: string;
+
+  private _isRunning: boolean = true;
+  private _onStop: (duration: Duration) => void;
+
+  get isRunning(): boolean {
+    return this._isRunning;
+  }
+
+  constructor(categoryKey: string, onStop: (duration: Duration) => void) {
+    this.categoryKey = categoryKey;
+    this.startedAt = Instant.ofNow();
+    this._onStop = onStop;
+  }
+
+  stop(): void {
+    if (this._isRunning == false) {
+      return;
+    }
+
+    this._isRunning = false;
+
+    const duration = Duration.givenInstantRange(this.startedAt, Instant.ofNow());
+    this._onStop(duration);
+  }
+}
+
 
 export class Stopwatch {
   readonly label: string;
   private _categoryByKey = new Map<string, StopwatchCategory>();
 
+  private _instances = new Set<StopwatchInstance>();
+
   constructor(label: string) {
     this.label = label;
   }
 
-  start(key: string): void {
+  start(key: string): StopwatchInstance {
     let category = this._categoryByKey.get(key);
+
     if (category == null) {
       category = {
         key,
@@ -24,29 +57,42 @@ export class Stopwatch {
         totalMs: 0,
         callCount: 0,
       };
+
       this._categoryByKey.set(key, category);
     }
 
-    if (category.startedAt != null) {
-      throw new Error(`Category '${key}' is already running`);
-    }
+    const instance = new StopwatchInstance(key, duration => {
+      category.callCount += 1;
+      category.totalMs += duration.toMilliseconds();
+      category.avgMs = category.totalMs / category.callCount;
+      this._instances.delete(instance);
+    });
 
-    category.startedAt = new Date().getTime();
+    this._instances.add(instance);
+
+    return instance;
   }
 
-  stop(key: string): void {
-    let category = this._categoryByKey.get(key);
-    if (category == null || category.startedAt == null) {
-      throw new Error(`Category '${key}' is not running`);
+  getDuration(key: string): Duration {
+    const category = this._categoryByKey.get(key);
+
+    if (category == null) {
+      throw new Error(`No category with key '${key}'`);
     }
 
-    const durationMs = new Date().getTime() - category.startedAt;
-    category.startedAt = undefined;
-    category.totalMs += durationMs;
-    category.callCount += 1;
+    return Duration.givenMilliseconds(category.totalMs);
   }
 
   report(): void {
+    if (this._instances.size > 0) {
+      const keys = Array.from(this._instances).map(i => i.categoryKey);
+      console.error(`${this.label} - Forcing ${this._instances.size} instances to stop (${keys.join(", ")})`);
+
+      for (const instance of this._instances) {
+        instance.stop();
+      }
+    }
+
     console.log("");
     console.log("---")
     console.log(this.label);
