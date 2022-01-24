@@ -43,6 +43,24 @@ class Instant {
         }
         return this._epochMilliseconds === other._epochMilliseconds;
     }
+    isAfter(other) {
+        if (other == null) {
+            return false;
+        }
+        if (!(other instanceof Instant)) {
+            return false;
+        }
+        return this._epochMilliseconds > other._epochMilliseconds;
+    }
+    isBefore(other) {
+        if (other == null) {
+            return false;
+        }
+        if (!(other instanceof Instant)) {
+            return false;
+        }
+        return this._epochMilliseconds < other._epochMilliseconds;
+    }
     toEpochMilliseconds() {
         return this._epochMilliseconds;
     }

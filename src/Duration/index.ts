@@ -101,6 +101,14 @@ export class Duration {
     return new Promise((resolve) => setTimeout(resolve, this._milliseconds));
   }
 
+  withoutNegativeValue(): Duration {
+    if (this._milliseconds >= 0) {
+      return this;
+    }
+
+    return new Duration(0);
+  }
+
   withAddedMilliseconds(ms: number): Duration {
     if (ms == null) {
       throw new Error("ms is required");

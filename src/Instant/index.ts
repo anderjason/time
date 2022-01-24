@@ -56,6 +56,30 @@ export class Instant {
     return this._epochMilliseconds === other._epochMilliseconds;
   }
 
+  isAfter(other: Instant): boolean {
+    if (other == null) {
+      return false;
+    }
+
+    if (!(other instanceof Instant)) {
+      return false;
+    }
+
+    return this._epochMilliseconds > other._epochMilliseconds;
+  }
+
+  isBefore(other: Instant): boolean {
+    if (other == null) {
+      return false;
+    }
+
+    if (!(other instanceof Instant)) {
+      return false;
+    }
+
+    return this._epochMilliseconds < other._epochMilliseconds;
+  }
+
   toEpochMilliseconds(): number {
     return this._epochMilliseconds;
   }

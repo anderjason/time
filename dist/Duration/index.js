@@ -74,6 +74,12 @@ class Duration {
     toDelay() {
         return new Promise((resolve) => setTimeout(resolve, this._milliseconds));
     }
+    withoutNegativeValue() {
+        if (this._milliseconds >= 0) {
+            return this;
+        }
+        return new Duration(0);
+    }
     withAddedMilliseconds(ms) {
         if (ms == null) {
             throw new Error("ms is required");

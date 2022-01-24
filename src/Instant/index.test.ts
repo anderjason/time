@@ -34,3 +34,14 @@ Test.define("Instant can add a duration", () => {
 
   Test.assert(date.toUTCString() === "Fri, 10 Apr 2020 02:08:05 GMT");
 });
+
+Test.define("Instant can determine if it is before or after another instant", () => {
+  const first = Instant.givenEpochMilliseconds(1586484305000);
+  const second = Instant.givenEpochMilliseconds(1586484306000);
+
+  Test.assert(first.isBefore(second));
+  Test.assert(!first.isAfter(second));
+
+  Test.assert(!second.isBefore(first));
+  Test.assert(second.isAfter(first));
+});

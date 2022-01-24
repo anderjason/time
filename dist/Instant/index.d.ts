@@ -6,6 +6,8 @@ export declare class Instant {
     private _epochMilliseconds;
     private constructor();
     isEqual(other: Instant): boolean;
+    isAfter(other: Instant): boolean;
+    isBefore(other: Instant): boolean;
     toEpochMilliseconds(): number;
     toNativeDate(): Date;
     toString(): string;

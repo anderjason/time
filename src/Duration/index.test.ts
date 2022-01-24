@@ -77,3 +77,11 @@ Test.define("Duration can create a promise of a delay", async () => {
 
   Test.assert(deltaFromExpectedMs < 25);
 });
+
+Test.define("Duration can discard negative values", async () => {
+  const positiveDuration = Duration.givenSeconds(5).withoutNegativeValue();
+  const negativeDuration = Duration.givenSeconds(-5).withoutNegativeValue();
+
+  Test.assertIsEqual(positiveDuration.toSeconds(), 5);
+  Test.assertIsEqual(negativeDuration.toSeconds(), 0);
+});
